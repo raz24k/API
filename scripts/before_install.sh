@@ -1,4 +1,10 @@
 #!/bin/bash
 echo "Running BeforeInstall script"
-# Add any pre-installation steps, like stopping the current application
-sudo systemctl stop springbootapp
+
+# Check if the application is running
+if systemctl is-active --quiet hellospringbootapp; then
+    echo "Stopping the running Spring Boot application"
+    sudo systemctl stop hellospringbootapp
+else
+    echo "Spring Boot application is not running"
+fi
