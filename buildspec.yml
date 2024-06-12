@@ -22,3 +22,8 @@ phases:
     commands:
       - echo Post-build phase started on date
 
+artifacts:
+  files:
+    - '**/*'
+  name: Testboot.zip
+  path: hello-springboot/
