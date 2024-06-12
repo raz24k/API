@@ -23,5 +23,5 @@ phases:
       - echo Post-build phase started on date
   artifacts:
     files:
-      - '**/*'
-    base-directory: ../Testboot
+      - target/HelloSpringBootApplication.war
+
