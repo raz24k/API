@@ -21,7 +21,4 @@ phases:
   post_build:
     commands:
       - echo Post-build phase started on date
-  artifacts:
-    files:
-      - target/*.war
 
