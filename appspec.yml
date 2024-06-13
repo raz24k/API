@@ -2,30 +2,30 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /home/ec2-user/springbootapp
+    destination: /home/ubuntu/
 
 hooks:
   BeforeInstall:
     - location: scripts/before_install.sh
       timeout: 300
-      runas: ec2-user
+      runas: ubuntu
 
   AfterInstall:
     - location: scripts/after_install.sh
       timeout: 300
-      runas: ec2-user
+      runas: ubuntu
 
   ApplicationStart:
     - location: scripts/start_server.sh
       timeout: 300
-      runas: ec2-user
+      runas: ubuntu
 
   ApplicationStop:
     - location: scripts/stop_server.sh
       timeout: 300
-      runas: ec2-user
+      runas: ubuntu
 
   ValidateService:
     - location: scripts/validate_service.sh
       timeout: 300
-      runas: ec2-user
+      runas: ubuntu
