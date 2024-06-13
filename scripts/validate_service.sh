@@ -1,9 +1,11 @@
+bashCopy code
 #!/bin/bash
-echo "Running ValidateService script"
-# Validate the service by checking if the application is running
-if pgrep -f 'java -jar your-spring-boot-app.jar'; then
-    echo "Application is running"
+# ValidateService script
+# Check if the application is running
+if pgrep java > /dev/null
+then
+   echo "Application is running"
+   exit 0
 else
-    echo "Application is not running"
-    exit 1
+   echo "Application is NOT running"exit 1
 fi
