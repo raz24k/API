@@ -25,5 +25,4 @@ phases:
 artifacts:
   files:
     - '**/*'
-  name: Testboot.zip
-  path: hello-springboot/
+
