@@ -26,3 +26,4 @@ artifacts:
       - target/*.war
     discard-paths: yes 
     
+    
