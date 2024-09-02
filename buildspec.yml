@@ -1,28 +1,37 @@
 version: 0.2
-
 phases:
-  install:
-    runtime-versions:
-      java: corretto17
-    commands:
-      - echo Updating apt-get
-      - apt-get update
-      - echo Installing Maven
-      - apt-get install -y maven
-  pre_build:
-    commands:
-      - echo Pre-build phase started on date
-      - mvn --version
-  build:
-    commands:
-      - echo Build started on date
-      - echo Building the Maven project...
-      - mvn clean install
-  post_build:
-    commands:
-      - echo Post-build phase started on date
-      - echo test comment
+ install:
+   runtime-versions:
+     java: corretto17
+   commands:
+     - echo Updating apt-get
+     - apt-get update
+     - echo Installing Maven
+     - apt-get install -y maven
+ pre_build:
+   commands:
+     - echo Pre-build phase started on `date`
+     - mvn --version
+     # Fetch the latest commit hash
+     - LAST_COMMIT_HASH=$(git rev-parse HEAD)
+ build:
+   commands:
+     - echo Build started on `date`
+     - echo Checking for changes...
+     # Compare the current commit hash with the last known commit hash
+     - if [ "$LAST_COMMIT_HASH" != "$(git rev-parse HEAD)" ]; then
+         echo "Changes detected. Proceeding with the build.";
+         echo Building the Maven project...;
+         mvn clean install;
+       else
+         echo "No changes detected. Skipping the build.";
+         exit 0;
+       fi
+ post_build:
+   commands:
+     - echo Post-build phase started on `date`
+     - echo test comment
 artifacts:
-    files:
-      - target/*.war
-    discard-paths: yes 
+ files:
+   - target/*.war
+ discard-paths: yes
