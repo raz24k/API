@@ -5,18 +5,10 @@ phases:
     runtime-versions:
       java: corretto17
     commands:
-          echo Checking if there are any changes in the repository...
-      # Check if there are any changes in the last commit
-        if git diff --name-only HEAD~1 | grep -q .; then
-          echo "Changes detected. Proceeding with npm install and build...";
-                - echo Updating apt-get
+      - echo Updating apt-get
       - apt-get update
       - echo Installing Maven
       - apt-get install -y maven
-        else
-          echo "No changes detected. Skipping build and install.";
-          exit 0;  # Skip the remaining steps
-        fi
   pre_build:
     commands:
       - echo Pre-build phase started on date
@@ -33,7 +25,4 @@ phases:
 artifacts:
     files:
       - target/*.war
-    discard-paths: yes
-    
-    
-    
+    discard-paths: yes 
