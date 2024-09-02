@@ -1,31 +1,42 @@
 version: 0.2
 phases:
-  install:
-    runtime-versions:
-      java: corretto17
-    commands:
-      - echo Updating apt-get
-      - apt-get update
-      - echo Installing Maven
-      - apt-get install -y maven
-  pre_build:
-    commands:
-      - echo Pre-build phase started on `date`
-      - mvn --version
-      - LAST_COMMIT_HASH=$(git rev-parse HEAD)
-  build:
-    commands:
-      - echo Build started on `date`
-      - echo Checking for changes...
-      - if [ "$LAST_COMMIT_HASH" != "$(git rev-parse HEAD)" ]; then echo
-        "Changes detected. Proceeding with the build."; echo Building the Maven
-        project...; mvn clean install; else echo "No changes detected. Skipping
-        the build."; exit 0; fi
-  post_build:
-    commands:
-      - echo Post-build phase started on `date`
-      - echo test comment
+ install:
+   runtime-versions:
+     java: corretto17
+   commands:
+     - echo Updating apt-get
+     - apt-get update
+     - echo Installing Maven
+     - apt-get install -y maven
+ pre_build:
+   commands:
+     - echo Pre-build phase started on $(date)
+     - mvn --version
+     - echo "Fetching the latest commit hash"
+     - LAST_COMMIT_HASH=$(git rev-parse HEAD)
+ build:
+   commands:
+     - echo Build started on $(date)
+     - echo "Checking for changes..."
+     - |
+       if [ "$LAST_COMMIT_HASH" != "$(git rev-parse HEAD)" ]; then
+         echo "Changes detected. Proceeding with the build.";
+         echo "Building the Maven project...";
+         mvn clean install;
+       else
+         echo "No changes detected. Skipping the build.";
+         exit 0;
+       fi
+ post_build:
+   commands:
+     - echo Post-build phase started on $(date)
+     - echo "Test comment"
+     - |
+       if [ ! -f target/*.war ]; then
+         echo "No WAR file found, skipping artifact upload.";
+         exit 0;
+       fi
 artifacts:
-  files:
-    - target/*.war
-  discard-paths: yes
+ files:
+   - target/*.war
+ discard-paths: yes
