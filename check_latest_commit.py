@@ -15,8 +15,8 @@ def get_latest_commit_date(repo_url):
 
 # Define repository URLs
 repositories = {
-    "frontend": "https://api.github.com/repos/TharunDD/UI/commits",
-    "backend": "https://api.github.com/repos/TharunDD/API/commits"
+    "frontend": "https://api.github.com/repos/raz24k/UI/commits",
+    "backend": "https://api.github.com/repos/raz24k/API/commits"
 }
 
 # Determine the most recently updated repository
